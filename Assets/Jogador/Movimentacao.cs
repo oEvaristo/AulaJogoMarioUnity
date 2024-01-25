@@ -9,7 +9,7 @@ public class Movimentacao : MonoBehaviour
 
     public float velocidadeMovimento = 10f;
     public float forcaGravidade = 9.8f;
-    public float jumpForce = 2f;
+    public float forcaPulo = 2f;
     public float velocidadeRotacao = 5f;
     private bool estaNoChao = false;
     private Vector3 movimentacao;
@@ -46,9 +46,19 @@ public class Movimentacao : MonoBehaviour
         }
         
         // Monta o Pulo
-        if (estaNoChao && Input.GetButtonDown("Jump"))
+        if (estaNoChao)
         {
-            direcaoPulo.y = jumpForce;
+            if (Input.GetButtonDown("Jump"))
+            {
+                direcaoPulo.y = forcaPulo;                
+            }
+            
+            animacao.SetBool("Pulando", false);
+        }
+        else
+        {
+            // Ativa a animação de pulo
+            animacao.SetBool("Pulando", true);
         }
 
         direcaoPulo.y -= forcaGravidade * Time.deltaTime;
